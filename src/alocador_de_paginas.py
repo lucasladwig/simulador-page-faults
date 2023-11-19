@@ -107,7 +107,7 @@ class AlocadorDePaginas:
                     fila.pop(0)
                     fila.append(pag_nova)
 
-        return self.__calcular_metricas_algoritmo(contador_falhas)
+        return self.__calcular_metricas(contador_falhas)
 
     @medir_tempo
     def segunda_chance(self, sequencia) -> dict:
@@ -146,7 +146,7 @@ class AlocadorDePaginas:
                             fila.append([pag_nova, 1])
                             break
 
-        return self.__calcular_metricas_algoritmo(contador_falhas)
+        return self.__calcular_metricas(contador_falhas)
 
     @medir_tempo
     def relogio(self, sequencia) -> dict:
@@ -188,7 +188,7 @@ class AlocadorDePaginas:
                             ponteiro = (ponteiro + 1) % self.__num_quadros
                             break
 
-        return self.__calcular_metricas_algoritmo(contador_falhas)
+        return self.__calcular_metricas(contador_falhas)
 
     @medir_tempo
     def nru(self, sequencia) -> dict:
@@ -258,7 +258,7 @@ class AlocadorDePaginas:
                 # Reinicia contador de reset com outro valor aleatório
                 contador_reset = random.randint(*faixa_aleatoria)
 
-        return self.__calcular_metricas_algoritmo(contador_falhas)
+        return self.__calcular_metricas(contador_falhas)
 
     @medir_tempo
     def lru_lista(self, sequencia) -> dict:
@@ -284,13 +284,13 @@ class AlocadorDePaginas:
                 paginas_carregadas.remove(pagina)
                 paginas_carregadas.append(pagina)
 
-        return self.__calcular_metricas_algoritmo(contador_falhas)
+        return self.__calcular_metricas(contador_falhas)
 
     @medir_tempo
     def nfu_contador(self, sequencia) -> dict:
         """Algoritmo 'não usado frequentemente', que prioriza remover páginas menos referenciadas. 
-        Mantém um contador de acessos para cada página, incrementando-o a cada interrupção de clock (com o valor do bit_R).
-        A interrupção de clock e simulada como um pequeno número aleatório de referências de página (sequência de acessos). 
+        Mantém um contador de acessos para cada página, incrementando-o com o valor do bit de referência a cada interrupção de clock.
+        A interrupção de clock é simulada como um pequeno número aleatório de referências de página (sequência de acessos). 
         Em caso de falha de página, remove aleatoriamente uma página entre as de menor contador."""
         # Inicializa a tabela com uma linha para cada página do processo
         # O índice da linha equivale ao número da página
@@ -351,7 +351,7 @@ class AlocadorDePaginas:
                 # Reinicia contador de clock com outro valor aleatório
                 contador_clock = random.randint(*faixa_aleatoria)
 
-        return self.__calcular_metricas_algoritmo(contador_falhas)
+        return self.__calcular_metricas(contador_falhas)
 
     @medir_tempo
     def envelhecimento(self, sequencia):
@@ -419,7 +419,7 @@ class AlocadorDePaginas:
                 # Reinicia contador de clock com outro valor aleatório
                 contador_clock = random.randint(*faixa_aleatoria)
 
-        return self.__calcular_metricas_algoritmo(contador_falhas)
+        return self.__calcular_metricas(contador_falhas)
 
 
     # SEQUÊNCIAS DE ACESSOS
@@ -462,7 +462,7 @@ class AlocadorDePaginas:
 
 
     # MÉTODOS AUXILIARES
-    def __calcular_metricas_algoritmo(self, falhas: int) -> dict:
+    def __calcular_metricas(self, falhas: int) -> dict:
         """Calcula as métricas relevantes para os algoritmos de substituição de páginas."""
         taxa_falhas = falhas/self.__num_acessos
 
